@@ -1,13 +1,13 @@
-import TetrisBoard from "./models/TetrisBoard";
+import Board from "./models/Board";
 import Tetrinomino from "./models/Tetrinomino";
 
 const tetrisEl = document.getElementById("tetris");
-const tetrisBoard = new TetrisBoard();
+const board = new Board();
 
-tetrisEl.append(tetrisBoard.canvas);
+tetrisEl.append(board.canvas);
 
-const tetrinomino = new Tetrinomino(tetrisBoard.context);
-tetrisBoard.tetris.push(tetrinomino);
+const tetrinomino = new Tetrinomino(board.context);
+board.tetrinominos.push(tetrinomino);
 
 const player = {
   pos: { x: 1, y: 1 },
@@ -20,9 +20,9 @@ let dropInterval = 1000;
 
 function playerDrop(): void {
   player.pos.y++;
-  if (tetrisBoard.checkCollision(player)) {
-    console.log("TEST");
-  }
+  // if (board.checkCollision(player)) {
+  //   console.log("TEST");
+  // }
   dropCounter = 0;
 }
 
@@ -33,10 +33,9 @@ function update(time = 0) {
   dropCounter += timeDelta;
   if (dropCounter > dropInterval) {
     playerDrop();
-    tetrisBoard.mergePlayerMatrix(player);
   }
 
-  tetrisBoard.drawFrame(player);
+  board.advanceFrame(player);
   requestAnimationFrame(update);
 }
 
