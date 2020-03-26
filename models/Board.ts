@@ -1,13 +1,10 @@
-import Tetrinomino from "./Tetrinomino";
-
 export default class Board {
-  tetrinominos: Tetrinomino[] = [];
   canvas: HTMLCanvasElement;
   context: CanvasRenderingContext2D;
   
   width = 240;
   height = 400;
-  board = [];
+  matrix = [];
 
   constructor() {
     this.createElement();
@@ -30,48 +27,46 @@ export default class Board {
 
   private createMatrix(w: number, h: number): void {
     while (h--) {
-      this.board.push(new Array(w).fill(0));
+      this.matrix.push(new Array(w).fill(0));
     }
   }
 
-  private drawBoard(matrix, offset): void {
+  private drawBoard(matrix, position): void {
     matrix.forEach((row, y) => {
       row.forEach((value, x) => {
         if (!!value) {
           this.context.fillStyle = "red";
-          this.context.fillRect(x + offset.x, y + offset.y, 1, 1);
+          this.context.fillRect(x + position.x, y + position.y, 1, 1);
         }
       });
     });
   }
 
-  checkCollision(player): boolean {
-    const { matrix: m, pos: o } = player;
-
-    for (let y = 0; y < m.length; y++) {
-      for (let x = 0; x < m[y].length; x++) {
-        if (!!m[y][x] && (
-          this.board[y + o.y] && 
-          this.board[y + o.y][x + o.x]) !== 0
+  checkCollision(playerMatrix, playerPosition): boolean {
+    for (let y = 0; y < playerMatrix.length; y++) {
+      for (let x = 0; x < playerMatrix[y].length; x++) {
+        if (!!playerMatrix[y][x] && (
+          this.matrix[y + playerPosition.y] && 
+          this.matrix[y + playerPosition.y][x + playerPosition.x]) !== 0
         ) return true;
       }
     }
     return false;
   }
 
-  mergePlayerPosition({ matrix, pos }): void {
-    matrix.forEach((row, y) => {
+  mergePlayerPosition(playerMatrix, playerPosition): void {
+    playerMatrix.forEach((row, y) => {
       row.forEach((value, x) => {
-        if (!!value) this.board[y + pos.y][x + pos.x] = value;
+        if (!!value) this.matrix[y + playerPosition.y][x + playerPosition.x] = value;
       });
     });
   }
 
-  advanceFrame(player): void {
+  advanceFrame(playerMatrix, playerPosition): void {
     this.context.fillStyle = "#333";
     this.context.fillRect(0, 0, this.width, this.height);
 
-    this.drawBoard(this.board, { x: 0, y: 0 });
-    this.drawBoard(player.matrix, player.pos);
+    this.drawBoard(this.matrix, { x: 0, y: 0 });
+    this.drawBoard(playerMatrix, playerPosition);
   }
 }
