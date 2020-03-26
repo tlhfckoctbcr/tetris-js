@@ -20,13 +20,15 @@ let dropInterval = 1000;
 
 function playerDrop(): void {
   player.pos.y++;
-  // if (board.checkCollision(player)) {
-  //   console.log("TEST");
-  // }
+  if (board.checkCollision(player)) {
+    player.pos.y--;
+    board.mergePlayerPosition(player);
+    
+  }
   dropCounter = 0;
 }
 
-function update(time = 0) {
+function update(time = 0): void {
   const timeDelta = time - lastTime;
   lastTime = time;
 
@@ -39,13 +41,20 @@ function update(time = 0) {
   requestAnimationFrame(update);
 }
 
-document.addEventListener("keydown", ({ keyCode }) => {
+function move(offset: number): void {
+  player.pos.x += offset;
+  if (board.checkCollision(player)) {
+    player.pos.x -= offset;
+  }
+}
+
+document.addEventListener("keydown", ({ keyCode }): void => {
   switch (keyCode) {
     case 37:
-      player.pos.x--;
+      move(-1);
       break;
     case 39:
-      player.pos.x++;
+      move(+1);
       break;
     case 40:
       playerDrop();

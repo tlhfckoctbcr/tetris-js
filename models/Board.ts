@@ -59,6 +59,14 @@ export default class Board {
     return false;
   }
 
+  mergePlayerPosition({ matrix, pos }): void {
+    matrix.forEach((row, y) => {
+      row.forEach((value, x) => {
+        if (!!value) this.board[y + pos.y][x + pos.x] = value;
+      });
+    });
+  }
+
   advanceFrame(player): void {
     this.context.fillStyle = "#333";
     this.context.fillRect(0, 0, this.width, this.height);
