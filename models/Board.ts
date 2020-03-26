@@ -27,7 +27,9 @@ export default class Board {
 
   private createMatrix(w: number, h: number): void {
     while (h--) {
-      this.matrix.push(new Array(w).fill(0));
+      // @ts-ignore
+      const array = new Array(w).fill(0);
+      this.matrix.push(array);
     }
   }
 
@@ -60,6 +62,21 @@ export default class Board {
         if (!!value) this.matrix[y + playerPosition.y][x + playerPosition.x] = value;
       });
     });
+  }
+
+  clearLines(): void {
+    clear:
+    for (let y = this.matrix.length -1; y > 0; --y) {
+      for (let x = 0; x < this.matrix[y].length; ++x) {
+        if (this.matrix[y][x] === 0) {
+          continue clear;
+        }
+      }
+
+      const row = this.matrix.splice(y, 1)[0].fill(0);
+      this.matrix.unshift(row);
+      y++;
+    }
   }
 
   advanceFrame(playerMatrix, playerPosition): void {

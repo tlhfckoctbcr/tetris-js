@@ -20,6 +20,33 @@ export default class Player {
     this.update();
   }
 
+  private reset(): void {
+    const tetrinomino = new Tetrinomino();
+
+    this.matrix = tetrinomino.matrix;
+    this.pos.y = 0;
+    this.pos.x = (this.board.matrix[0].length / 2 | 0) - (this.matrix[0].length / 2 | 0);
+
+    if (this.board.checkCollision(this.matrix, this.pos)) {
+
+    }
+
+    this.counter = 0;
+  }
+
+  private update(time = 0): void {
+    const timeDelta = time - this.previousTime;
+    this.previousTime = time;
+    this.counter += timeDelta;
+
+    if (this.counter > this.interval) {
+      this.drop();
+    }
+
+    this.board.advanceFrame(this.matrix, this.pos);
+    requestAnimationFrame(this.update);
+  }
+
   move(offset: number): void {
     this.pos.x += offset;
     if (this.board.checkCollision(this.matrix, this.pos)) {
@@ -32,35 +59,22 @@ export default class Player {
     if (this.board.checkCollision(this.matrix, this.pos)) {
       this.pos.y--;
       this.board.mergePlayerPosition(this.matrix, this.pos);
+      this.board.clearLines();
       this.reset();
     }
     this.counter = 0;
   }
 
-  reset(): void {
-    const tetrinomino = new Tetrinomino();
-
-    this.matrix = tetrinomino.matrix;
-    this.pos.y = 0;
-    this.pos.x = (this.board.matrix[0].length/2 | 0) - (this.matrix[0].length/2 | 0);
-  
-    if (this.board.checkCollision(this.matrix, this.pos)) {
-      window.alert("Game over");
+  rotate(direction = 0): void {
+    for(let y = 0; y < this.matrix.length; y++) {
+      for(let x = 0; x < y; x++) {
+        [this.matrix[x][y], this.matrix[y][x]] = [this.matrix[y][x], this.matrix[x][y]];
+      }
     }
-
-    this.counter = 0;
-  }
-
-  update(time = 0): void {
-    const timeDelta = time - this.previousTime;
-    this.previousTime = time;  
-    this.counter += timeDelta;
-
-    if (this.counter > this.interval) {
-      this.drop();
+    if (direction === 1) {
+      this.matrix.forEach(row => row.reverse());
+    } else {
+      this.matrix.reverse();
     }
-  
-    this.board.advanceFrame(this.matrix, this.pos);
-    requestAnimationFrame(this.update);
   }
 }

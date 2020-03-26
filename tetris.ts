@@ -2,6 +2,7 @@ import Board from "./models/Board";
 import Player from "./models/Player";
 
 const tetrisEl = document.getElementById("tetris");
+
 const board = new Board();
 const player = new Player(board);
 
@@ -15,6 +16,12 @@ document.addEventListener("keydown", ({ keyCode }): void => {
       break;
     case 40:
       player.drop();
+      break;
+    case 90:
+      player.rotate();
+      break;
+    case 88:
+      player.rotate(1);
       break;
   }
 });
