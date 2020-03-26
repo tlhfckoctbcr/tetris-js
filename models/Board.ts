@@ -1,3 +1,13 @@
+enum BoardColors {
+  red = 1,
+  orange,
+  yellow,
+  green,
+  blue,
+  indigo,
+  purple
+}
+
 export default class Board {
   canvas: HTMLCanvasElement;
   context: CanvasRenderingContext2D;
@@ -27,7 +37,6 @@ export default class Board {
 
   private createMatrix(w: number, h: number): void {
     while (h--) {
-      // @ts-ignore
       const array = new Array(w).fill(0);
       this.matrix.push(array);
     }
@@ -37,7 +46,7 @@ export default class Board {
     matrix.forEach((row, y) => {
       row.forEach((value, x) => {
         if (!!value) {
-          this.context.fillStyle = "red";
+          this.context.fillStyle = BoardColors[value];
           this.context.fillRect(x + position.x, y + position.y, 1, 1);
         }
       });
@@ -80,7 +89,7 @@ export default class Board {
   }
 
   advanceFrame(playerMatrix, playerPosition): void {
-    this.context.fillStyle = "#333";
+    this.context.fillStyle = "black";
     this.context.fillRect(0, 0, this.width, this.height);
 
     this.drawBoard(this.matrix, { x: 0, y: 0 });
