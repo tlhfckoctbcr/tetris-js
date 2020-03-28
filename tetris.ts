@@ -15,7 +15,7 @@ document.addEventListener("keydown", ({ keyCode }): void => {
       player.move(+1);
       break;
     case 32:
-      player.place();
+      player.slam();
       break;
     case 40:
       player.drop();

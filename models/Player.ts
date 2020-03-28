@@ -46,6 +46,12 @@ export default class Player {
     requestAnimationFrame(this.update);
   }
 
+  private place(): void {
+    this.board.mergePlayerPosition(this.matrix, this.pos);
+    this.board.clearLines();
+    this.reset();
+  }
+
   move(offset: number): void {
     this.pos.x += offset;
     if (this.board.checkCollision(this.matrix, this.pos)) {
@@ -57,21 +63,17 @@ export default class Player {
     this.pos.y++;
     if (this.board.checkCollision(this.matrix, this.pos)) {
       this.pos.y--;
-      this.board.mergePlayerPosition(this.matrix, this.pos);
-      this.board.clearLines();
-      this.reset();
+      this.place();
     }
     this.counter = 0;
   }
 
-  place(): void {
+  slam(): void {
     for (let y = 0; y < this.board.matrix.length; y++) {
       this.pos.y++;
       if (this.board.checkCollision(this.matrix, this.pos)) {
         this.pos.y--;
-        this.board.mergePlayerPosition(this.matrix, this.pos);
-        this.board.clearLines();
-        this.reset();
+        this.place();
         break;
       }
     }
