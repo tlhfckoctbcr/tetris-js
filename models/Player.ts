@@ -28,7 +28,6 @@ export default class Player {
     this.pos.x = (this.board.matrix[0].length / 2 | 0) - (this.matrix[0].length / 2 | 0);
 
     if (this.board.checkCollision(this.matrix, this.pos)) {
-
     }
 
     this.counter = 0;
@@ -65,9 +64,22 @@ export default class Player {
     this.counter = 0;
   }
 
+  place(): void {
+    for (let y = 0; y < this.board.matrix.length; y++) {
+      this.pos.y++;
+      if (this.board.checkCollision(this.matrix, this.pos)) {
+        this.pos.y--;
+        this.board.mergePlayerPosition(this.matrix, this.pos);
+        this.board.clearLines();
+        this.reset();
+        break;
+      }
+    }
+  }
+
   rotate(direction = 0): void {
-    for(let y = 0; y < this.matrix.length; y++) {
-      for(let x = 0; x < y; x++) {
+    for (let y = 0; y < this.matrix.length; y++) {
+      for (let x = 0; x < y; x++) {
         [this.matrix[x][y], this.matrix[y][x]] = [this.matrix[y][x], this.matrix[x][y]];
       }
     }

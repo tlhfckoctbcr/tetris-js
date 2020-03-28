@@ -37,6 +37,7 @@ export default class Board {
 
   private createMatrix(w: number, h: number): void {
     while (h--) {
+      // @ts-ignore
       const array = new Array(w).fill(0);
       this.matrix.push(array);
     }

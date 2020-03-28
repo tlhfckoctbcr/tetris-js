@@ -1,7 +1,7 @@
 {
-  "name": "tetris",
+  "name": "tetris-js",
   "version": "1.0.0",
-  "description": "",
+  "description": "A Tetris clone built with TypeScript",
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html"
