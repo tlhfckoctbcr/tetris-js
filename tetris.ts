@@ -9,7 +9,6 @@ const ghost = new Ghost(board);
 const player = new Player(board, ghost);
 
 document.addEventListener("keydown", ({ keyCode }): void => {
-  console.log(keyCode);
   switch (keyCode) {
     case 16:
       player.cacheTetrinomino();

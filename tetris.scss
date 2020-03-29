@@ -1,0 +1,22 @@
+body {
+  background: #333;
+  color: #fff;
+  font-family: sans-serif;
+  text-align: center;
+
+  .game-grid {
+    display: flex;
+    .col {
+      flex: 1;
+    }
+  }
+
+  canvas {
+    height: 80vh;
+    margin: 4px 4px 0 4px;
+  }
+
+  #tetris {
+    border: 1px solid #111;
+  }
+}
