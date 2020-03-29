@@ -1,6 +1,7 @@
 body {
   background: url("./images/bg.gif");
   font-family: sans-serif;
+  text-align: center;
 
   .game-grid {
     display: flex;
@@ -13,9 +14,6 @@ body {
   canvas {
     height: 80vh;
     margin: 4px 4px 0 4px;
-  }
-
-  #tetris {
     border: 1px solid #333;
   }
 }
