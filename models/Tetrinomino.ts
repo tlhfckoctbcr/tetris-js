@@ -10,18 +10,22 @@ enum TetrinominoTypes {
 
 export default class Tetrinomino {
   matrix = [];
+  type = "";
 
-  constructor() {
-    this.matrix = this.create(this.getRandomType());
+  constructor(type) {
+    if (!type) this.getRandomType();
+    else this.type = type;
+
+    this.matrix = this.create();
   }
 
-  getRandomType(): string {
+  getRandomType(): void {
     const value = Math.floor(Math.random() * 7) + 1;
-    return TetrinominoTypes[value];
+    this.type = TetrinominoTypes[value];
   }
 
-  create(type) {
-    switch (type) {
+  create() {
+    switch (this.type) {
       case "I":
         return [
           [0,0,1,0],

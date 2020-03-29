@@ -6,7 +6,7 @@ enum BoardColors {
   blue,
   indigo,
   purple,
-  gray
+  "#191919"
 }
 
 export default class Board {

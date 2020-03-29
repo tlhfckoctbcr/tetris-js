@@ -9,8 +9,13 @@ export default class Player {
   counter = 0;
   interval = 1000;
   previousTime = 0;
+
+  type: string | null = null;
   pos = { x: 0, y: 0 };
   matrix = [];
+
+  cache: string | null = null;
+  swapped = false;
 
   constructor(board: Board, ghost: Ghost) {
     this.board = board;
@@ -21,9 +26,10 @@ export default class Player {
     this.reset();
   }
 
-  private reset(): void {
-    const tetrinomino = new Tetrinomino();
+  private reset(cachedType?): void {
+    const tetrinomino = new Tetrinomino(cachedType);
 
+    this.type = tetrinomino.type;
     this.matrix = tetrinomino.matrix;
     this.pos.y = 0;
     this.pos.x = (this.board.matrix[0].length / 2 | 0) - (this.matrix[0].length / 2 | 0);
@@ -51,6 +57,7 @@ export default class Player {
   }
 
   private place(): void {
+    this.swapped = false;
     this.board.mergePosition(this.matrix, this.pos);
     this.board.clearLines();
     this.reset();
@@ -110,5 +117,14 @@ export default class Player {
 
     this.ghost.setMatrix(this.matrix);
     this.ghost.setPosition(this.pos);
+  }
+
+  cacheTetrinomino(): void {
+    if (!this.swapped) {
+      const cachedType = this.cache;
+      this.cache = this.type;
+      this.reset(cachedType);
+      this.swapped = true;
+    }
   }
 }
