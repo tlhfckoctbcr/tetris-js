@@ -95,8 +95,10 @@ export default class Player {
     if (this.board.checkCollision(this.matrix, this.pos)) {
       if (this.pos.x < 0) {
         this.pos.x = 0;
-      } else {
+      } else if (this.pos.x + this.matrix.length > 12) {
         this.pos.x = 12 - this.matrix.length;
+      } else if (this.pos.y + this.matrix.length > 20) {
+        this.pos.y = 20 - this.matrix.length;
       }
     }
   }
