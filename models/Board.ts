@@ -1,3 +1,5 @@
+import Cell from "./Cell";
+
 enum BoardColors {
   red = 1,
   orange,
@@ -52,21 +54,14 @@ export default class Board {
       this.context.fillStyle = "#222222";
       this.context.fillRect(xValue, yValue, 1, 1);
     } else {
-      const gradient = this.context.createLinearGradient(xValue, yValue, xValue + 1, yValue + 1);
-      gradient.addColorStop(0, color);
-      gradient.addColorStop(1, color.toLowerCase());
-
-      this.context.fillStyle = gradient;
-      this.context.fillRect(xValue, yValue, 1, 1);
+      new Cell(this.context, color, xValue, yValue);
     }
   }
 
   private drawBoard(matrix, position): void {
     matrix.forEach((row, y) => {
       row.forEach((value, x) => {
-        if (!!value) {
-          this.createCell(x, y, position, BoardColors[value]);
-        }
+        if (!!value) this.createCell(x, y, position, BoardColors[value]);
       });
     });
   }
