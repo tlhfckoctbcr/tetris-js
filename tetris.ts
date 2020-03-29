@@ -1,10 +1,12 @@
 import Board from "./models/Board";
+import Ghost from "./models/Ghost";
 import Player from "./models/Player";
 
 const tetrisEl = document.getElementById("tetris");
 
 const board = new Board();
-const player = new Player(board);
+const ghost = new Ghost(board);
+const player = new Player(board, ghost);
 
 document.addEventListener("keydown", ({ keyCode }): void => {
   switch (keyCode) {

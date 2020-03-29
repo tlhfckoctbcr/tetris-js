@@ -1,8 +1,10 @@
 import Tetrinomino from "./Tetrinomino";
 import Board from "./Board";
+import Ghost from "./Ghost";
 
 export default class Player {
   board: Board;
+  ghost: Ghost;
 
   counter = 0;
   interval = 1000;
@@ -10,11 +12,9 @@ export default class Player {
   pos = { x: 0, y: 0 };
   matrix = [];
 
-  constructor(board: Board) {
-    const tetrinomino = new Tetrinomino();
-
+  constructor(board: Board, ghost: Ghost) {
     this.board = board;
-    this.matrix = tetrinomino.matrix;
+    this.ghost = ghost;
     this.update = this.update.bind(this);
 
     this.update();
@@ -27,6 +27,9 @@ export default class Player {
     this.matrix = tetrinomino.matrix;
     this.pos.y = 0;
     this.pos.x = (this.board.matrix[0].length / 2 | 0) - (this.matrix[0].length / 2 | 0);
+
+    this.ghost.setMatrix(this.matrix);
+    this.ghost.setPosition(this.pos);
 
     if (this.board.checkCollision(this.matrix, this.pos)) {
     }
@@ -48,7 +51,7 @@ export default class Player {
   }
 
   private place(): void {
-    this.board.mergePlayerPosition(this.matrix, this.pos);
+    this.board.mergePosition(this.matrix, this.pos);
     this.board.clearLines();
     this.reset();
   }
@@ -58,6 +61,8 @@ export default class Player {
     if (this.board.checkCollision(this.matrix, this.pos)) {
       this.pos.x -= offset;
     }
+
+    this.ghost.setPosition(this.pos);
   }
 
   drop(): void {
@@ -67,6 +72,7 @@ export default class Player {
       this.place();
     }
     this.counter = 0;
+    this.ghost.setPosition(this.pos);
   }
 
   slam(): void {
@@ -101,5 +107,8 @@ export default class Player {
         this.pos.y = 20 - this.matrix.length;
       }
     }
+
+    this.ghost.setMatrix(this.matrix);
+    this.ghost.setPosition(this.pos);
   }
 }

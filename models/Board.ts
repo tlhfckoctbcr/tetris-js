@@ -5,7 +5,8 @@ enum BoardColors {
   green,
   blue,
   indigo,
-  purple
+  purple,
+  gray
 }
 
 export default class Board {
@@ -57,16 +58,19 @@ export default class Board {
   checkCollision(playerMatrix, playerPosition): boolean {
     for (let y = 0; y < playerMatrix.length; y++) {
       for (let x = 0; x < playerMatrix[y].length; x++) {
-        if (!!playerMatrix[y][x] && (
-          this.matrix[y + playerPosition.y] && 
-          this.matrix[y + playerPosition.y][x + playerPosition.x]) !== 0
+        if (
+          !!playerMatrix[y][x] &&
+          (this.matrix[y + playerPosition.y] &&
+          this.matrix[y + playerPosition.y][x + playerPosition.x]) !== 0 &&
+          (this.matrix[y + playerPosition.y] &&
+          this.matrix[y + playerPosition.y][x + playerPosition.x]) !== 8
         ) return true;
       }
     }
     return false;
   }
 
-  mergePlayerPosition(playerMatrix, playerPosition): void {
+  mergePosition(playerMatrix, playerPosition): void {
     playerMatrix.forEach((row, y) => {
       row.forEach((value, x) => {
         if (!!value) this.matrix[y + playerPosition.y][x + playerPosition.x] = value;
@@ -74,11 +78,20 @@ export default class Board {
     });
   }
 
+  mergeGhostPosition(ghostMatrix, ghostPosition): void {
+    for (let y = this.matrix.length -1; y > 0; --y) {
+      for (let x = 0; x < this.matrix[y].length; ++x) {
+        if (this.matrix[y][x] === 8) this.matrix[y][x] = 0;
+      }
+    }
+    this.mergePosition(ghostMatrix, ghostPosition);
+  }
+
   clearLines(): void {
     clear:
     for (let y = this.matrix.length -1; y > 0; --y) {
       for (let x = 0; x < this.matrix[y].length; ++x) {
-        if (this.matrix[y][x] === 0) {
+        if (this.matrix[y][x] === 0 || this.matrix[y][x] === 8) {
           continue clear;
         }
       }
