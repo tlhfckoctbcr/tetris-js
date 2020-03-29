@@ -7,7 +7,7 @@ export default class Player {
   counter = 0;
   interval = 1000;
   previousTime = 0;
-  pos = { x: 1, y: 1 };
+  pos = { x: 0, y: 0 };
   matrix = [];
 
   constructor(board: Board) {
@@ -18,6 +18,7 @@ export default class Player {
     this.update = this.update.bind(this);
 
     this.update();
+    this.reset();
   }
 
   private reset(): void {
@@ -89,6 +90,14 @@ export default class Player {
       this.matrix.forEach(row => row.reverse());
     } else {
       this.matrix.reverse();
+    }
+    // Ensure the tetrinomino doesn't get stuck in the wall
+    if (this.board.checkCollision(this.matrix, this.pos)) {
+      if (this.pos.x < 0) {
+        this.pos.x = 0;
+      } else {
+        this.pos.x = 12 - this.matrix.length;
+      }
     }
   }
 }
