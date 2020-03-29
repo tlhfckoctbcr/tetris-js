@@ -12,7 +12,7 @@ export default class Tetrinomino {
   matrix = [];
   type = "";
 
-  constructor(type) {
+  constructor(type?) {
     if (!type) this.getRandomType();
     else this.type = type;
 

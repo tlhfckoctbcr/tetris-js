@@ -7,9 +7,21 @@
   <link rel="stylesheet" href="./tetris.scss">
 </head>
 <body>
-  <div id="tetris"></div>
+  <div class="game-grid">
+    <div class="col">
+      <div id="tetris"></div>
+    </div>
+    <div class="col">
+      <h2>NEXT</h2>
+      <div id="next"></div>
+      <h2>CACHE</h2>
+      <div id="cache"></div>
+    </div>
+  </div>
+
   <script src="./tetris.ts"></script>
 
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-134709686-2"></script>
   <script>
     window.dataLayer = window.dataLayer || [];

@@ -1,10 +1,13 @@
 import Tetrinomino from "./Tetrinomino";
 import Board from "./Board";
 import Ghost from "./Ghost";
+import Display from "./Display";
 
 export default class Player {
   board: Board;
   ghost: Ghost;
+  next: Display;
+  cache: Display;
 
   counter = 0;
   interval = 1000;
@@ -14,26 +17,33 @@ export default class Player {
   pos = { x: 0, y: 0 };
   matrix = [];
 
-  cache: string | null = null;
+  nextPiece: Tetrinomino | null;
+  cachedPiece: Tetrinomino | null;
   swapped = false;
 
-  constructor(board: Board, ghost: Ghost) {
+  constructor(board: Board, ghost: Ghost, next: Display, cache: Display) {
     this.board = board;
     this.ghost = ghost;
+    this.next = next;
+    this.cache = cache;
+
     this.update = this.update.bind(this);
 
     this.update();
     this.reset();
   }
 
-  private reset(cachedType?): void {
-    const tetrinomino = new Tetrinomino(cachedType);
+  private reset(cachedPiece?): void {
+    const tetrinomino = cachedPiece || this.nextPiece || new Tetrinomino();
+    this.nextPiece = new Tetrinomino();
 
     this.type = tetrinomino.type;
     this.matrix = tetrinomino.matrix;
     this.pos.y = 0;
     this.pos.x = (this.board.matrix[0].length / 2 | 0) - (this.matrix[0].length / 2 | 0);
 
+    this.next.update(this.nextPiece);
+    this.cache.update(this.cachedPiece);
     this.ghost.setMatrix(this.matrix);
     this.ghost.setPosition(this.pos);
 
@@ -121,9 +131,9 @@ export default class Player {
 
   cacheTetrinomino(): void {
     if (!this.swapped) {
-      const cachedType = this.cache;
-      this.cache = this.type;
-      this.reset(cachedType);
+      const cachedPiece = this.cachedPiece;
+      this.cachedPiece = new Tetrinomino(this.type);
+      this.reset(cachedPiece);
       this.swapped = true;
     }
   }

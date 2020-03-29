@@ -1,12 +1,17 @@
 import Board from "./models/Board";
 import Ghost from "./models/Ghost";
 import Player from "./models/Player";
+import Display from "./models/Display";
 
 const tetrisEl = document.getElementById("tetris");
+const cacheEl = document.getElementById("cache");
+const nextEl = document.getElementById("next");
 
 const board = new Board();
+const cache = new Display();
+const next = new Display();
 const ghost = new Ghost(board);
-const player = new Player(board, ghost);
+const player = new Player(board, ghost, next, cache);
 
 document.addEventListener("keydown", ({ keyCode }): void => {
   switch (keyCode) {
@@ -35,3 +40,5 @@ document.addEventListener("keydown", ({ keyCode }): void => {
 });
 
 tetrisEl.append(board.canvas);
+cacheEl.append(cache.canvas);
+nextEl.append(next.canvas);

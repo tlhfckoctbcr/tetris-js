@@ -1,3 +1,14 @@
+export enum CellColors {
+  red = 1,
+  orange,
+  yellow,
+  green,
+  blue,
+  indigo,
+  violet,
+  gray
+}
+
 const colors = {
   "red": {
     "0": "#f43c30",

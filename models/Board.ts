@@ -1,15 +1,4 @@
-import Cell from "./Cell";
-
-enum BoardColors {
-  red = 1,
-  orange,
-  yellow,
-  green,
-  blue,
-  indigo,
-  violet,
-  gray
-}
+import Cell, { CellColors } from "./Cell";
 
 export default class Board {
   canvas: HTMLCanvasElement;
@@ -61,7 +50,7 @@ export default class Board {
   private drawBoard(matrix, position): void {
     matrix.forEach((row, y) => {
       row.forEach((value, x) => {
-        if (!!value) this.createCell(x, y, position, BoardColors[value]);
+        if (!!value) this.createCell(x, y, position, CellColors[value]);
       });
     });
   }
