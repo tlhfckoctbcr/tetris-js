@@ -5,8 +5,8 @@ enum BoardColors {
   green,
   blue,
   indigo,
-  purple,
-  "#191919"
+  violet,
+  gray
 }
 
 export default class Board {
@@ -44,12 +44,28 @@ export default class Board {
     }
   }
 
+  private createCell(x: number, y: number, position, color: string): void {
+    const xValue = x + position.x;
+    const yValue = y + position.y;
+
+    if (color === "gray") {
+      this.context.fillStyle = "#222222";
+      this.context.fillRect(xValue, yValue, 1, 1);
+    } else {
+      const gradient = this.context.createLinearGradient(xValue, yValue, xValue + 1, yValue + 1);
+      gradient.addColorStop(0, color);
+      gradient.addColorStop(1, color.toLowerCase());
+
+      this.context.fillStyle = gradient;
+      this.context.fillRect(xValue, yValue, 1, 1);
+    }
+  }
+
   private drawBoard(matrix, position): void {
     matrix.forEach((row, y) => {
       row.forEach((value, x) => {
         if (!!value) {
-          this.context.fillStyle = BoardColors[value];
-          this.context.fillRect(x + position.x, y + position.y, 1, 1);
+          this.createCell(x, y, position, BoardColors[value]);
         }
       });
     });
