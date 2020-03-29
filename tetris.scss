@@ -1,11 +1,10 @@
 body {
-  background: #333;
-  color: #fff;
+  background: url("./images/bg.gif");
   font-family: sans-serif;
-  text-align: center;
 
   .game-grid {
     display: flex;
+
     .col {
       flex: 1;
     }
@@ -17,6 +16,6 @@ body {
   }
 
   #tetris {
-    border: 1px solid #111;
+    border: 1px solid #333;
   }
 }

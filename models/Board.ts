@@ -51,7 +51,7 @@ export default class Board {
     const yValue = y + position.y;
 
     if (color === "gray") {
-      this.context.fillStyle = "#222222";
+      this.context.fillStyle = "rgba(255,255,255,0.2)";
       this.context.fillRect(xValue, yValue, 1, 1);
     } else {
       new Cell(this.context, color, xValue, yValue);
@@ -114,8 +114,7 @@ export default class Board {
   }
 
   advanceFrame(playerMatrix, playerPosition): void {
-    this.context.fillStyle = "black";
-    this.context.fillRect(0, 0, this.width, this.height);
+    this.context.clearRect(0, 0, this.width, this.height);
 
     this.drawBoard(this.matrix, { x: 0, y: 0 });
     this.drawBoard(playerMatrix, playerPosition);
