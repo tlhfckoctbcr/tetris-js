@@ -1,4 +1,11 @@
+@font-face {
+  font-family: "BrushKing";
+  src: url("fonts/Brush\ King.otf") format("opentype")
+}
+
 body {
+  padding: 0;
+  margin: 0;
   overflow-y: hidden;
   height: 100vh;
   font-family: sans-serif;
@@ -8,12 +15,28 @@ body {
   background: linear-gradient(to bottom,  #fcef00 0%, #ddc909 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcef00', endColorstr='#ddb800',GradientType=0 );
 
-
   .game-grid {
     display: flex;
+    height: 100%;
 
     .col {
       flex: 1;
+    }
+  }
+
+  .sidebar {
+    background: #222;
+    
+    h1 {
+      font-family: "BrushKing";
+      font-size: 48px;
+      color: #37daff;
+      text-align: center;
+      text-shadow: -1px -1px 0 #333, 1px -1px 0 yellow, -1px 1px 0 #333, 1px 1px 0 yellow, 4px 4px yellow;
+    }
+
+    .instructions {
+      height:100vh;
     }
   }
 
@@ -21,7 +44,7 @@ body {
     text-align: center;
 
     canvas {
-      height: 80vh;
+      height: 94vh;
       margin: 4px 4px 0 4px;
       border: 4px solid #000;
       background: url("./images/bg.gif");
