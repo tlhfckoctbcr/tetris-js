@@ -56,9 +56,9 @@ export default class Player {
   private update(time = 0): void {
     const timeDelta = time - this.previousTime;
     this.previousTime = time;
-    this.counter += timeDelta;
+    this.counter += timeDelta * (this.board.level || 1);
 
-    if (this.counter > this.interval) {
+    if (this.counter > (this.interval)) {
       this.drop();
     }
 

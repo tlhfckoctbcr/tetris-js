@@ -8,10 +8,15 @@ export default class Board {
   height = 400;
   matrix = [];
 
+  lineTotal = 0;
+  level = 0;
+  score = 0;
+
   constructor() {
     this.createElement();
     this.createContext();
     this.createMatrix(12, 20);
+    this.updateScore(0);
   }
 
   private createElement(): void {
@@ -88,6 +93,8 @@ export default class Board {
   }
 
   clearLines(): void {
+    let lineCount = 0;
+
     clear:
     for (let y = this.matrix.length -1; y > 0; --y) {
       for (let x = 0; x < this.matrix[y].length; ++x) {
@@ -98,8 +105,29 @@ export default class Board {
 
       const row = this.matrix.splice(y, 1)[0].fill(0);
       this.matrix.unshift(row);
+      lineCount++;
       y++;
     }
+
+    this.updateScore(lineCount);
+  }
+
+  updateScore(lineCount: number): void {
+    const multipliers = [0, 40, 50, 100, 300];
+
+    this.lineTotal += lineCount;
+    this.level = Math.floor(this.lineTotal / 10);
+    this.score += (this.level + 1) * (lineCount * multipliers[lineCount]);
+
+    // Display values in HTML
+    const scoreEl = document.getElementById("score");
+    scoreEl.innerText = `${this.score}`;
+
+    const lineTotalEl = document.getElementById("lineTotal");
+    lineTotalEl.innerText = `${this.lineTotal}`;
+
+    const levelEl = document.getElementById("level");
+    levelEl.innerText = `${this.level}`;
   }
 
   advanceFrame(playerMatrix, playerPosition): void {
