@@ -1,8 +1,3 @@
-@font-face {
-  font-family: "BrushKing";
-  src: url("fonts/Brush\ King.otf") format("opentype")
-}
-
 body {
   padding: 0;
   margin: 0;
@@ -21,22 +16,6 @@ body {
 
     .col {
       flex: 1;
-    }
-  }
-
-  .sidebar {
-    background: #222;
-    
-    h1 {
-      font-family: "BrushKing";
-      font-size: 48px;
-      color: #37daff;
-      text-align: center;
-      text-shadow: -1px -1px 0 #333, 1px -1px 0 yellow, -1px 1px 0 #333, 1px 1px 0 yellow, 4px 4px yellow;
-    }
-
-    .instructions {
-      height:100vh;
     }
   }
 
