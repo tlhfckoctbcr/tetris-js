@@ -73,16 +73,25 @@ body {
 
   #info {
     padding: 8px;
-    height: 300px;
+    height: auto;
     width: 50%;
     color: black;
-    background: url("./images/bg.gif");
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    background: white;
+    border: 3px solid #333;
+    border-radius: 5px;
 
     h2 {
       margin: 3px;
     }
+  }
+
+  .display {
+    margin-top: -5px;
+    height: 50px;
+    width: 150px;
+    background: white;
+    border: 3px solid #333;
+    border-radius: 5px;
+    text-align: center;
   }
 }
