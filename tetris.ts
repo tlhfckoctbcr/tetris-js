@@ -33,6 +33,7 @@ document.addEventListener("keydown", ({ keyCode }): void => {
     case 90:
       player.rotate();
       break;
+    case 38:
     case 88:
       player.rotate(1);
       break;

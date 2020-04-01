@@ -9,6 +9,8 @@ export default class Player {
   next: Display;
   cache: Display;
 
+  gameState: "active";
+
   counter = 0;
   interval = 1000;
   previousTime = 0;
