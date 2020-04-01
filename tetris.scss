@@ -78,7 +78,7 @@ body {
   #info {
     padding: 8px;
     height: auto;
-    width: 50%;
+    width: 55%;
     color: black;
 
     h2 {
@@ -86,11 +86,12 @@ body {
     }
 
     .key {
+      float: left;
+      margin: 0 2px;
       border: 1px solid black;
       background: #000;
       color: #ffffff;
       border-radius: 5px;
-      display: inline-block;
       width: 30px;
       height: 30px;
       text-align: center;

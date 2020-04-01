@@ -15,8 +15,7 @@ export default class Board {
   constructor() {
     this.createElement();
     this.createContext();
-    this.createMatrix(12, 20);
-    this.updateScore(0);
+    this.initialize();
   }
 
   private createElement(): void {
@@ -58,6 +57,17 @@ export default class Board {
         if (!!value) this.createCell(x, y, position, CellColors[value]);
       });
     });
+  }
+
+  initialize(): void {
+    this.matrix = [];
+
+    this.lineTotal = 0;
+    this.level = 0;
+    this.score = 0;
+
+    this.createMatrix(12, 20);
+    this.updateScore(0);
   }
 
   checkCollision(playerMatrix, playerPosition): boolean {

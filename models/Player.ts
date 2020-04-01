@@ -9,7 +9,8 @@ export default class Player {
   next: Display;
   cache: Display;
 
-  gameState: "active";
+  animationId = null;
+  gameState = "stopped";
 
   counter = 0;
   interval = 1000;
@@ -30,12 +31,25 @@ export default class Player {
     this.cache = cache;
 
     this.update = this.update.bind(this);
+  }
 
-    this.update();
-    this.reset();
+  private initialize(): void {
+    this.counter = 0;
+    this.interval = 1000;
+    this.previousTime = 0;
+  
+    this.type = null;
+    this.pos = { x: 0, y: 0 };
+    this.matrix = [];
+  
+    this.nextPiece = null;
+    this.cachedPiece = null;
+    this.swapped = false;
   }
 
   private reset(cachedPiece?): void {
+    if (this.gameState !== "active") return;
+
     const tetrinomino = cachedPiece || this.nextPiece || new Tetrinomino();
     this.nextPiece = new Tetrinomino();
 
@@ -56,6 +70,8 @@ export default class Player {
   }
 
   private update(time = 0): void {
+    if (this.gameState !== "active") return;
+
     const timeDelta = time - this.previousTime;
     this.previousTime = time;
     this.counter += timeDelta * (this.board.level || 1);
@@ -68,10 +84,23 @@ export default class Player {
     requestAnimationFrame(this.update);
   }
 
+  private gameOver(): void {
+    this.start();
+  }
+
   private place(): void {
     this.swapped = false;
     this.board.mergePosition(this.matrix, this.pos);
     this.board.clearLines();
+    this.reset();
+  }
+
+  start(): void {
+    this.gameState = "active";
+    
+    this.board.initialize();
+    this.initialize();
+    this.update();
     this.reset();
   }
 

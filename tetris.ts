@@ -15,6 +15,9 @@ const player = new Player(board, ghost, next, cache);
 
 document.addEventListener("keydown", ({ keyCode }): void => {
   switch (keyCode) {
+    case 78:
+      player.start();
+      break;
     case 16:
       player.cacheTetrinomino();
       break;

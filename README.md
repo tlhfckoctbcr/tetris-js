@@ -9,6 +9,7 @@ yarn start
 ```
 
 ### How to Play
+- Press N to begin a new game
 - Use the arrow keys to move your Tetrinomino
 - Z, X and up arrow rotate the piece
 - Spacebar will drop the piece into place
