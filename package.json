@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "parcel": "1.12.4",
+    "parcel": "2.0.0",
     "sass": "1.26.10",
     "typescript": "3.9.7"
   }
